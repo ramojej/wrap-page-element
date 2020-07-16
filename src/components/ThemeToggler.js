@@ -4,16 +4,20 @@ import { motion, AnimatePresence } from "framer-motion"
 import PropTypes from "prop-types"
 
 const TogglerContainer = styled.button`
-  ${tw`cursor-pointer flex items-center relative justify-center text-center focus:outline-none bg-transparent border-none`};
+  ${tw`cursor-pointer flex items-center relative justify-center text-center focus:outline-none bg-transparent border-none order-1`};
   width: 2rem;
   height: 2rem;
 `
 
 const SVGContainer = styled(motion.div)`
-  ${tw`absolute inline-block align-middle`}
+  ${tw`absolute`};
+  width: 2rem;
+  height: 2rem;
+  /* padding-top: 5px; */
 
   svg {
-    height: 2rem;
+    height: auto;
+    width: 100%;
   }
 `
 
