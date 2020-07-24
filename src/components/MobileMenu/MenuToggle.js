@@ -1,52 +1,32 @@
 import React from "react"
-import { motion } from "framer-motion"
 import tw, { styled } from "twin.macro"
 
-const Path = props => (
-  <motion.path strokeWidth="3" strokeLinecap="round" {...props} />
-)
-
-export const MenuToggleContainer = styled(motion.div)`
-  ${tw`relative z-20 flex items-center order-2 ml-4`}
+export const MenuToggleContainer = styled.div`
+  ${tw`relative flex items-center order-2 ml-4`}
 
   @media ${props => props.theme.screens.lg} {
     ${tw`hidden`}
   }
 
   button {
-    ${tw`focus:outline-none border-none flex rounded-sm`};
+    ${tw`focus:outline-none border-none flex rounded-lg p-2`};
     background: ${props => props.theme.lighterGray};
-    padding-top: 5px;
 
-    path {
-      stroke: ${props => props.theme.text};
+    g {
+      fill: ${props => props.theme.text};
     }
   }
 `
 
-export const MenuToggle = ({ toggle }) => (
-  <button onClick={toggle}>
-    <svg width="23" height="23" viewBox="0 0 23 23">
-      <Path
-        variants={{
-          closed: { d: "M 2 2.5 L 20 2.5" },
-          open: { d: "M 3 16.5 L 17 2.5" },
-        }}
-      />
-      <Path
-        d="M 2 9.423 L 20 9.423"
-        variants={{
-          closed: { opacity: 1 },
-          open: { opacity: 0 },
-        }}
-        transition={{ duration: 0.1 }}
-      />
-      <Path
-        variants={{
-          closed: { d: "M 2 16.346 L 20 16.346" },
-          open: { d: "M 3 2.5 L 17 16.346" },
-        }}
-      />
+export const MenuToggle = ({ toggleMobileMenu }) => (
+  <button onClick={toggleMobileMenu}>
+    <svg width="16" height="10" viewBox="0 0 16 10">
+      <title>Open mobile navigation</title>
+      <g fillRule="evenodd">
+        <rect y="8" width="16" height="2" rx="1"></rect>
+        <rect y="4" width="16" height="2" rx="1"></rect>
+        <rect width="16" height="2" rx="1"></rect>
+      </g>
     </svg>
   </button>
 )

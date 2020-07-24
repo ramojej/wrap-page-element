@@ -1,29 +1,45 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import Container from "./Container"
 import { ThemeContext } from "../context/ThemeContext"
 import { MenuToggle, MenuToggleContainer } from "./MobileMenu/MenuToggle"
 import Nav from "./Nav"
+import MobileMenu from "./MobileMenu/MobileMenu"
 import ThemeToggler from "./ThemeToggler"
 import tw, { styled } from "twin.macro"
-import { useCycle } from "framer-motion"
 
 const HeaderRight = styled.div`
   ${tw`flex ml-auto items-center`}
 `
 
 const HeaderContainer = styled.header`
-  ${tw`flex items-center py-4`}
+  ${tw`flex items-center`};
+
+  @media ${props => props.theme.screens.lg} {
+    ${tw`py-4`}
+  }
+`
+
+const MainContainer = styled.div`
+  ${tw`relative p-4`};
+
+  @media ${props => props.theme.screens.lg} {
+    ${tw`p-0`}
+  }
 `
 
 const Header = ({ siteTitle }) => {
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext)
+  const [isOpen, toggleOpen] = useState(false)
 
-  const [isOpen, toggleOpen] = useCycle(false, true)
+  const toggleMobileMenu = () => {
+    toggleOpen(!isOpen)
+  }
+
   return (
-    <>
-      <Container>
+    <MainContainer>
+      <Container mobileContainer>
         <HeaderContainer>
           <h1 style={{ margin: 0 }}>
             <Link
@@ -38,13 +54,9 @@ const Header = ({ siteTitle }) => {
           </h1>
           <HeaderRight>
             <Nav />
-            <MenuToggleContainer
-              initial={false}
-              animate={isOpen ? "open" : "closed"}
-            >
+            <MenuToggleContainer>
               <MenuToggle
-                toggle={() => toggleOpen()}
-                style={{ fillColor: "red" }}
+                toggleMobileMenu={toggleMobileMenu}
                 isDarkMode={isDarkMode}
               />
             </MenuToggleContainer>
@@ -54,8 +66,14 @@ const Header = ({ siteTitle }) => {
             />
           </HeaderRight>
         </HeaderContainer>
+
+        <MobileMenu
+          isDarkMode={isDarkMode}
+          toggleMobileMenu={toggleMobileMenu}
+          isOpen={isOpen}
+        />
       </Container>
-    </>
+    </MainContainer>
   )
 }
 
